@@ -74,6 +74,12 @@ module Multidb
     end
 
     def get(name, &block)
+      if name.is_a?(Hash) && !@candidates[name[:name]]
+        dynamic = {}
+        dynamic[name[:name]] = name[:config]
+        append(dynamic)
+      end
+
       candidates = @candidates[name]
       candidates ||= @fallback ? @candidates[:default] : []
       raise ArgumentError, "No such database connection '#{name}'" if candidates.empty?
