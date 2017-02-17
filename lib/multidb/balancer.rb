@@ -80,6 +80,8 @@ module Multidb
         append(dynamic)
       end
 
+      name = name[:name]
+
       candidates = @candidates[name]
       candidates ||= @fallback ? @candidates[:default] : []
       raise ArgumentError, "No such database connection '#{name}'" if candidates.empty?
